@@ -2,7 +2,7 @@ import {FilterType} from "../App";
 import {AddItemForm} from "./AddItemForm";
 import React from "react";
 import {EditSpan} from "./EditSpan";
-import {Button, Checkbox, Grid, IconButton} from "@mui/material";
+import {Button, Checkbox, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import pink from "@mui/material/colors/pink";
 
@@ -24,7 +24,7 @@ export type TaskType = {
     isDone: boolean
 }
 
-export const ToDoList: React.FC<TodoListComponentType> = (props) => {
+export const TodoList: React.FC<TodoListComponentType> = (props) => {
 
     const onFilterChangeTodoListClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         let filter = e.currentTarget.innerText

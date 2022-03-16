@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TaskType, ToDoList} from "./Components/ToDoList";
+import {TaskType, TodoList} from "./Components/TodoList";
 import {v1} from "uuid";
 import {AddItemForm} from "./Components/AddItemForm";
 import Box from '@mui/material/Box';
@@ -10,13 +10,14 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
 export type FilterType = "ALL" | "ACTIVE" | "COMPLETED" | string
-
 export type TodoListType = {
     id: string
     title: string
     filter: string
 }
-type TasksStateType = { [key: string]: Array<TaskType> }
+export type TasksStateType = {
+    [id: string ]: Array<TaskType>
+}
 
 function App() {
     const todoListID1: string = v1();
@@ -88,7 +89,7 @@ function App() {
 
     const changeTodoListTitle = (value: string, id: string) => {
         setTodoListsArrays([...todoListsArrays.map(t => {
-                return t.id == id ? {...t, title: value} : t
+                return t.id === id ? {...t, title: value} : t
             })]
         )
     }
@@ -110,7 +111,7 @@ function App() {
                         }
                         return <Grid item>
                             <Paper elevation={3} style={{padding: "10px"}}>
-                                <ToDoList
+                                <TodoList
                                     key={t.id}
                                     id={t.id}
                                     title={t.title}

@@ -1,6 +1,6 @@
 import {v1} from 'uuid';
-import {TodoListType} from '../App';
-import {AddTodolistTitleActionType, ChangeTodolistTitleActionType, todolistReducer} from "./todolist-reduser";
+import {TodoListType} from '../../App';
+import {addTodolistACType, changeTodolistTitleACType, todolistReducer} from "../todolist-reduser";
 
 test('correct todolist should be removed', () => {
     let todolistId1 = v1();
@@ -23,7 +23,7 @@ test('correct todolist should be added', () => {
 
     let newTodolistTitle: string = "New Todolist";
 
-    const action: AddTodolistTitleActionType = {
+    const action: addTodolistACType = {
         type: 'ADD-TODOLIST',
         title: newTodolistTitle
     }
@@ -50,7 +50,7 @@ test("Change todolist title", () => {
 
     const newTitle = "NewTitle"
 
-    const action: ChangeTodolistTitleActionType = {
+    const action: changeTodolistTitleACType = {
         type: 'CHANGE-TODOLIST-TITLE',
         id: todolistId1,
         title: newTitle
