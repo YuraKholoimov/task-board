@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/task-board/static/css/main.adab7465.chunk.css",
+    "main.js": "/task-board/static/js/main.5cccba54.chunk.js",
+    "main.js.map": "/task-board/static/js/main.5cccba54.chunk.js.map",
+    "runtime-main.js": "/task-board/static/js/runtime-main.085bb110.js",
+    "runtime-main.js.map": "/task-board/static/js/runtime-main.085bb110.js.map",
+    "static/js/2.9b8968ac.chunk.js": "/task-board/static/js/2.9b8968ac.chunk.js",
+    "static/js/2.9b8968ac.chunk.js.map": "/task-board/static/js/2.9b8968ac.chunk.js.map",
+    "index.html": "/task-board/index.html",
+    "precache-manifest.51c88cfb419f62fe9b976303cff27b09.js": "/task-board/precache-manifest.51c88cfb419f62fe9b976303cff27b09.js",
+    "service-worker.js": "/task-board/service-worker.js",
+    "static/css/main.adab7465.chunk.css.map": "/task-board/static/css/main.adab7465.chunk.css.map",
+    "static/js/2.9b8968ac.chunk.js.LICENSE.txt": "/task-board/static/js/2.9b8968ac.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/task-board/static/media/pexels-grey.adc91222.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.085bb110.js",
+    "static/js/2.9b8968ac.chunk.js",
+    "static/css/main.adab7465.chunk.css",
+    "static/js/main.5cccba54.chunk.js"
+  ]
+}
