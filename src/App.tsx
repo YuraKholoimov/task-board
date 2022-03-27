@@ -27,7 +27,6 @@ export type FilterType = "ALL" | "ACTIVE" | "COMPLETED" | string
 
 function App() {
     //----------------------- STATE ---------------------------
-
     const todoListState = useSelector<AppStateType, TodoListType[]>(state => state.todoLists)
     const tasksState = useSelector<AppStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch()
@@ -86,7 +85,7 @@ function App() {
                                             onChangeTaskStatus={onChangeTaskStatus}
                                             removeTodolist={removeTodolist}
                                             changeTodoListTitle={changeTodoListTitle}
-                                            changeTaskTitle={(titlle, taskId) => changeTaskTitle(titlle, taskId, t.id )}
+                                            changeTaskTitle={(title, taskId) => changeTaskTitle(title, taskId, t.id )}
                                         />
                                     </Paper>
                                 </Grid>
