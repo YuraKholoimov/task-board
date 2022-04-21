@@ -6,19 +6,19 @@ export type AppStateType = ReturnType<typeof rootReducer>
 
 
 let preloadedState;
-let x = localStorage.getItem('Trello')
-    if(x) preloadedState = JSON.parse(x)
+let storage = localStorage.getItem('Trello')
+    if (storage) preloadedState = JSON.parse(storage)
 
 const rootReducer = combineReducers({
    tasks: tasksReducer,
     todoLists: todoListsReducer,
 })
-export const store = createStore(rootReducer, preloadedState);
+export const store = createStore(rootReducer);
 
 store.subscribe(() => {
     const state = store.getState()
     localStorage.setItem("Trello", JSON.stringify(state))
 })
 
-export  const state = store.getState()
+export const state = store.getState()
 

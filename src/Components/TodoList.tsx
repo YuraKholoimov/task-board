@@ -1,37 +1,45 @@
 import {FilterType} from "../App";
 import {AddItemForm} from "./AddItemForm";
-import React from "react";
+import React, {useCallback} from "react";
 import {EditSpan} from "./EditSpan";
-import {Button, Checkbox, IconButton} from "@mui/material";
+import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import pink from "@mui/material/colors/pink";
 import {TaskType} from "../state/tasks-reduser";
+import {Task} from "./Task";
 
 export type TodoListComponentType = {
     id: string
     title: string
     filter: string
     tasks: Array<TaskType>
-    removeTask: (idTask: string, idTodoList: string) => void
     changeFilterTodoList: (filter: FilterType, id: string) => void
     addTask: (inputValue: string, objID: string) => void
-    onChangeTaskStatus: (id: string, isDone: boolean, objID: string) => void
     removeTodolist: (id: string) => void
     changeTodoListTitle: (value: string, id: string) => void
-    changeTaskTitle: (title: string, taskId: string) => void
+    removeTask: (idTask: string, idTodoList: string) => void
+    onChangeTaskStatus: (id: string, isDone: boolean, objID: string) => void
+    changeTaskTitle: (title: string, taskId: string, todolistId: string) => void
 }
 
+export const TodoList = React.memo((props: TodoListComponentType) => {
+    console.log("Todolist Todolist Todolist")
 
-export const TodoList: React.FC<TodoListComponentType> = (
-    props
-) => {
 
     const onFilterChangeTodoListClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         let filter = e.currentTarget.innerText
         props.changeFilterTodoList(filter, props.id)
     }
-    const removeTodolist = () => props.removeTodolist(props.id)
-    const addTask = (inputValue: string) => props.addTask(inputValue, props.id)
+    const removeTodolist = useCallback(() => props.removeTodolist(props.id), [props.removeTodolist, props.id])
+
+    const addTask = useCallback((inputValue: string) => props.addTask(inputValue, props.id), [props.addTask, props.id])
+
+    let tasksFoTodolist = props.tasks
+
+    if (props.filter === "ACTIVE") {
+        tasksFoTodolist = props.tasks.filter(t => !t.isDone)
+    } else if (props.filter === "COMPLETED") {
+        tasksFoTodolist = props.tasks.filter(t => t.isDone)
+    }
 
     return (
         <div>
@@ -50,38 +58,17 @@ export const TodoList: React.FC<TodoListComponentType> = (
             {/*------------------------- MAP TASKS --------------------*/}
             <div>
                 {
-                    props.tasks.map(task => {
-                        const onClickRemoveHandler = () => props.removeTask(task.id, props.id)
-                        const onChangStatusHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-                            props.onChangeTaskStatus(task.id, e.currentTarget.checked, props.id)
-                        }
-                        const onChangeTaskTitle = (title: string) => {
-                            props.changeTaskTitle(title, task.id)
-                        }
-                        return (
-                            <div key={task.id} className={task.isDone ? "is-done" : ""}>
-                                <Checkbox
-                                    sx={{
-                                        color: pink[800],
-                                        '&.Mui-checked': {
-                                            color: pink[600],
-                                        }
-                                    }}
-                                    checked={task.isDone}
-                                    onChange={onChangStatusHandler}
-                                />
-                                <EditSpan
-                                    title={task.title}
-                                    callback={onChangeTaskTitle}
-                                />
-                                <IconButton
-                                    aria-label="delete"
-                                    onClick={onClickRemoveHandler}>
-                                    <Delete/>
-                                </IconButton>
-                            </div>
-                        )
-                    })}
+                    tasksFoTodolist.map(task =>
+                        <Task
+                            key={task.id}
+                            removeTask={props.removeTask}
+                            onChangeTaskStatus={props.onChangeTaskStatus}
+                            changeTaskTitle={props.changeTaskTitle}
+                            task={task}
+                            todoListId={props.id}
+                        />
+                    )
+                }
             </div>
             {/*----------------------------BUTTONS---------------------------*/}
             <div>
@@ -102,7 +89,6 @@ export const TodoList: React.FC<TodoListComponentType> = (
             </div>
         </div>
     )
-}
-
+})
 
 
