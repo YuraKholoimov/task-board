@@ -8,7 +8,7 @@ export default {
     title: 'AddItemFormForExample',
     component: AddItemForm,
     argTypes: {
-        onClick: { description: 'Button inside form clicked' },
+        callback: { description: 'Button inside form clicked' },
     },
 } as Meta;
 
