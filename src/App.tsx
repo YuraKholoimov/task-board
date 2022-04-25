@@ -11,9 +11,8 @@ import {AppStateType} from "./state/store";
 import {
     addTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
-    removeTodolistAC,
-    TodoListType
+    changeTodolistTitleAC, FilterType,
+    removeTodolistAC, TodoListDomainType,
 } from "./state/todolist-reduser";
 import {
     addTaskAC,
@@ -22,13 +21,12 @@ import {
     removeTaskAC,
     TasksStateType
 } from "./state/tasks-reduser";
+import {TaskStatus} from "./API/todolists-api";
 
-export type FilterType = "ALL" | "ACTIVE" | "COMPLETED" | string
 
 function App() {
-
     //----------------------- STATE ---------------------------
-    const todoListState = useSelector<AppStateType, TodoListType[]>(state => state.todoLists)
+    const todoListState = useSelector<AppStateType, TodoListDomainType[]>(state => state.todoLists)
     const tasksState = useSelector<AppStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch()
 
@@ -39,8 +37,8 @@ function App() {
 
     const addTask = useCallback((inputValue: string, idTdl: string) => dispatch(addTaskAC(inputValue, idTdl)), [dispatch])
 
-    const onChangeTaskStatus = useCallback((id: string, isDone: boolean, idTodoList: string) => {
-        dispatch(changeTaskStatusAC(id, isDone, idTodoList))
+    const onChangeTaskStatus = useCallback((id: string, status: TaskStatus, idTodoList: string) => {
+        dispatch(changeTaskStatusAC(id, status, idTodoList))
     }, [dispatch])
 
     const changeFilterTodoList = useCallback((filter: FilterType, id: string) => {

@@ -3,8 +3,9 @@ import {Provider} from 'react-redux'
 import {combineReducers, createStore} from 'redux'
 import {v1} from 'uuid'
 import tasksReducer from '../../state/tasks-reduser'
-import {todoListsReducer} from "../../state/todolist-reduser";
+import {todoListID1, todoListID2, todoListsReducer} from "../../state/todolist-reduser";
 import {AppStateType} from "../../state/store";
+import {TaskPriorities, TaskStatus} from "../../API/todolists-api";
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
@@ -13,17 +14,53 @@ const rootReducer = combineReducers({
 
 const initialGlobalState = {
     todoLists: [
-        {id: "todolistId1", title: "What to learn", filter: "all"},
-        {id: "todolistId2", title: "What to buy", filter: "all"}
+        {id: "todolistId1", title: "What to learn", filter: "all", addedDate: "",order: 0},
+        {id: "todolistId2", title: "What to buy", filter: "all", addedDate: "",order: 0}
     ] ,
     tasks: {
-        ["todolistId1"]: [
-            {id: v1(), title: "HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true}
+        [todoListID1]: [
+            { description: "",
+                title: "Type to change...",
+                status: TaskStatus.Completed,
+                priority: TaskPriorities.low,
+                startDate: "",
+                deadline: "",
+                id: v1(),
+                todoListId: todoListID1,
+                order: 0,
+                addedDate: ""},
+            { description: "",
+                title: "Type to change...",
+                status: TaskStatus.Completed,
+                priority: TaskPriorities.low,
+                startDate: "",
+                deadline: "",
+                id: v1(),
+                todoListId: todoListID1,
+                order: 0,
+                addedDate: ""}
         ],
-        ["todolistId2"]: [
-            {id: v1(), title: "Milk", isDone: true},
-            {id: v1(), title: "React Book", isDone: true}
+        [todoListID2]: [
+            { description: "",
+                title: "Type to change...",
+                status: TaskStatus.Completed,
+                priority: TaskPriorities.low,
+                startDate: "",
+                deadline: "",
+                id: v1(),
+                todoListId: todoListID2,
+                order: 0,
+                addedDate: ""},
+            { description: "",
+                title: "Type to change...",
+                status: TaskStatus.Completed,
+                priority: TaskPriorities.low,
+                startDate: "",
+                deadline: "",
+                id: v1(),
+                todoListId: todoListID2,
+                order: 0,
+                addedDate: ""}
         ]
     }
 };

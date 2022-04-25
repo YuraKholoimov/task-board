@@ -1,13 +1,13 @@
-import {TaskType} from "../state/tasks-reduser";
 import React, {useCallback} from "react";
 import {Checkbox, IconButton} from "@mui/material";
 import pink from "@mui/material/colors/pink";
 import {EditSpan} from "./EditSpan";
 import {Delete} from "@mui/icons-material";
+import {TaskStatus, TaskType} from "../API/todolists-api";
 
 export type TaskPropsType = {
     removeTask: (idTask: string, idTodoList: string) => void
-    onChangeTaskStatus: (id: string, isDone: boolean, objID: string) => void
+    onChangeTaskStatus: (id: string, status: TaskStatus, objID: string) => void
     changeTaskTitle: (title: string, taskId: string, todolistId: string) => void
     task: TaskType
     todoListId: string
@@ -20,7 +20,8 @@ export const Task = React.memo((props:TaskPropsType ) => {
         [props.removeTask, props.task.id, props.todoListId])
 
     const onChangStatusHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        props.onChangeTaskStatus(props.task.id, e.currentTarget.checked, props.todoListId)
+        let checked = e.currentTarget.checked
+        props.onChangeTaskStatus(props.task.id, !checked ? TaskStatus.Completed : TaskStatus.New, props.todoListId)
     }, [props.onChangeTaskStatus, props.task.id,  props.todoListId])
 
     const onChangeTaskTitle = useCallback((title: string) => {
@@ -29,7 +30,7 @@ export const Task = React.memo((props:TaskPropsType ) => {
 
 
     return (
-        <div className={props.task.isDone ? "is-done" : ""}>
+        <div className={props.task.status === TaskStatus.Completed ? "is-done" : ""}>
             <Checkbox
                 sx={{
                     color: pink[800],
@@ -37,7 +38,7 @@ export const Task = React.memo((props:TaskPropsType ) => {
                         color: pink[600],
                     }
                 }}
-                checked={props.task.isDone}
+                checked={!props.task.status}
                 onChange={onChangStatusHandler}
             />
             <EditSpan title={props.task.title} callback={onChangeTaskTitle} />

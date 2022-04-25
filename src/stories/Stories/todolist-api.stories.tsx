@@ -75,17 +75,17 @@ export const DeleteTasks = () => {
     return <div> {JSON.stringify(state)}</div>
 }
 
-export const UprateTasks = () => {
-    const [state, setState] = useState<any>(null)
-    useEffect(() => {
-        todoListApi.updateTask("4c59383c-6d60-40c9-a476-7813376c898c", "")
-            .then((res) => {
-                setState(res.data)
-            })
-    }, [])
-
-    return <div> {JSON.stringify(state)}</div>
-}
+// export const UprateTasks = () => {
+//     const [state, setState] = useState<any>(null)
+//     useEffect(() => {
+//         todoListApi.updateTask("4c59383c-6d60-40c9-a476-7813376c898c", "1")
+//             .then((res) => {
+//                 setState(res.data)
+//             })
+//     }, [])
+//
+//     return <div> {JSON.stringify(state)}</div>
+// }
 
 export const CreateTask = () => {
     const [state, setState] = useState<any>(null)
