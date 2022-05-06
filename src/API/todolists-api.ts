@@ -1,4 +1,6 @@
 import axios from "axios";
+import {Dispatch} from "redux";
+import {addTaskAC} from "../state/tasks-reduser";
 
 const settings = {
     withCredentials: true,
@@ -56,15 +58,14 @@ export type TaskType = {
 type GetTasksResponse = {
     error: string | null
     totalCount: number
-    tasks: TaskType[]
+    items: TaskType[]
 }
 
-type UpdateTask = {
+export type UpdateTask = {
     title: string
     description: string
-    completed: boolean
-    status: number
-    priority: number
+    status: TaskStatus
+    priority: TaskPriorities
     startDate: string
     deadline: string
 }
@@ -74,24 +75,24 @@ export const todoListApi = {
         return axiosInstance.get<TodoListType[]>("/todo-lists")
     },
     createTodoList(title: string) {
-        return axiosInstance.post<ResponseType<{ title: string }>>("/todo-lists", {title: title})
+        return axiosInstance.post<ResponseType<{ item: TodoListType }>>("/todo-lists", {title: title})
     },
     updateTodoList(id: string, title: string) {
-        return axiosInstance.put<ResponseType>(`/todo-lists${id}`, {title: title})
+        return axiosInstance.put<ResponseType>(`/todo-lists/${id}`, {title: title})
     },
     deleteTodoList(id: string) {
-        return axiosInstance.post<ResponseType>(`/todo-lists/${id}`)
+        return axiosInstance.delete<ResponseType>(`/todo-lists/${id}`)
     },
     getTasks(todoListId: string) {
         return axiosInstance.get<GetTasksResponse>(`/todo-lists/${todoListId}/tasks`)
     },
-    deleteTasks(todoListId: string, taskId: string) {
+    deleteTasks(taskId: string, todoListId: string) {
         return axiosInstance.delete<ResponseType>(`/todo-lists/${todoListId}/tasks/${taskId}`)
     },
     updateTask(todoListId: string, taskId: string, model: UpdateTask) {
         return axiosInstance.put<ResponseType>(`/todo-lists/${todoListId}/tasks/${taskId}`, model)
     },
     createTask(todoListId: string, title: string) {
-    return axiosInstance.post<ResponseType<TaskType>>(`todo-lists/${todoListId}/tasks`, {title: title})
-}
+        return axiosInstance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todoListId}/tasks`, {title: title})
+    }
 }

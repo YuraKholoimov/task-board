@@ -1,11 +1,13 @@
 import {AddItemForm} from "./AddItemForm";
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import {EditSpan} from "./EditSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import {Task} from "./Task";
 import {FilterType} from "../state/todolist-reduser";
 import {TaskStatus, TaskType} from "../API/todolists-api";
+import {useDispatch} from "react-redux";
+import {setTasks, setTasksAC} from "../state/tasks-reduser";
 
 export type TodoListComponentType = {
     id: string
@@ -13,7 +15,7 @@ export type TodoListComponentType = {
     filter: string
     tasks: Array<TaskType>
     changeFilterTodoList: (filter: FilterType, id: string) => void
-    addTask: (inputValue: string, objID: string) => void
+    addTask: (objID: string, inputValue: string) => void
     removeTodolist: (id: string) => void
     changeTodoListTitle: (value: string, id: string) => void
     removeTask: (idTask: string, idTodoList: string) => void
@@ -23,22 +25,29 @@ export type TodoListComponentType = {
 
 export const TodoList = React.memo((props: TodoListComponentType) => {
     console.log("Todolist Todolist Todolist")
+    let dispatch = useDispatch<any>()
 
-
+    useEffect(() => {
+        dispatch(setTasks(props.id))
+    }, [])
     const onFilterChangeTodoListClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         let filter = e.currentTarget.innerText
         props.changeFilterTodoList(filter, props.id)
     }
-    const removeTodolist = useCallback(() => props.removeTodolist(props.id), [props.removeTodolist, props.id])
+    const removeTodolist = useCallback(() => {
+        props.removeTodolist(props.id)
+    }, [props.removeTodolist, props.id])
 
-    const addTask = useCallback((inputValue: string) => props.addTask(inputValue, props.id), [props.addTask, props.id])
+    const addTask = useCallback((inputValue: string) => {
+        props.addTask(props.id, inputValue)
+    }, [props.addTask, props.id])
 
     let tasksFoTodolist = props.tasks
 
     if (props.filter === "ACTIVE") {
-        tasksFoTodolist = props.tasks.filter(t => t.status === TaskStatus.New)
+        tasksFoTodolist = props.tasks.filter(t => t.status !==  TaskStatus.New)
     } else if (props.filter === "COMPLETED") {
-        tasksFoTodolist = props.tasks.filter(t => t.status === TaskStatus.Completed)
+        tasksFoTodolist = props.tasks.filter(t => t.status !== TaskStatus.Completed)
     }
 
     return (
@@ -53,12 +62,12 @@ export const TodoList = React.memo((props: TodoListComponentType) => {
                     <Delete/>
                 </IconButton>
             </h3>
-            {/*------------------------- INPUT FIELD TASK-------------------- */}
+            {/*---------------------- INPUT FIELD TASK-------------------- */}
             <AddItemForm callback={addTask}/>
-            {/*------------------------- MAP TASKS --------------------*/}
+            {/*--------------------------- MAP TASKS ------------------------*/}
             <div>
                 {
-                    tasksFoTodolist.map(task =>
+                    tasksFoTodolist?.map(task =>
                         <Task
                             key={task.id}
                             removeTask={props.removeTask}
