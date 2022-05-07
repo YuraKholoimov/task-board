@@ -1,26 +1,24 @@
 import axios from "axios";
-import {Dispatch} from "redux";
-import {addTaskAC} from "../state/tasks-reduser";
 
+// ----- AXIOS
 const settings = {
     withCredentials: true,
     headers: {
         "api-key": "74a2af3c-45fa-4c81-b701-0275dea0591d"
     }
 }
-
 const axiosInstance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.1",
     ...settings
 })
 
+// ----- TYPES
 export enum TaskStatus {
     New = 0,
     InProgress = 1,
     Completed = 2,
     Draft = 3
 }
-
 export enum TaskPriorities {
     low,
     Middle,
@@ -28,20 +26,17 @@ export enum TaskPriorities {
     Urgently,
     Later,
 }
-
 export type TodoListType = {
     id: string,
     title: string,
     addedDate: string,
     order: number
 }
-
 type ResponseType<D = {}> = {
     resultCode: number
     messages: string[]
     data: D
 }
-
 export type TaskType = {
     description: string
     title: string
@@ -54,13 +49,11 @@ export type TaskType = {
     order: number
     addedDate: string
 }
-
 type GetTasksResponse = {
     error: string | null
     totalCount: number
     items: TaskType[]
 }
-
 export type UpdateTask = {
     title: string
     description: string
@@ -70,6 +63,7 @@ export type UpdateTask = {
     deadline: string
 }
 
+// ----- API
 export const todoListApi = {
     getTodoLists() {
         return axiosInstance.get<TodoListType[]>("/todo-lists")

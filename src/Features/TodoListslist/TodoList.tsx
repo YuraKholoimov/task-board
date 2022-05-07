@@ -1,13 +1,13 @@
-import {AddItemForm} from "./AddItemForm";
+import {AddItemForm} from "../../Components/AddItemForm/AddItemForm";
 import React, {useCallback, useEffect} from "react";
-import {EditSpan} from "./EditSpan";
+import {EditSpan} from "../../Components/EditSpan/EditSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import {Task} from "./Task";
-import {FilterType} from "../state/todolist-reduser";
-import {TaskStatus, TaskType} from "../API/todolists-api";
+import {Task} from "./Task/Task";
+import {FilterType} from "./todolist-reduser";
+import {TaskStatus, TaskType} from "../../API/todolists-api";
 import {useDispatch} from "react-redux";
-import {setTasks, setTasksAC} from "../state/tasks-reduser";
+import {setTasks, setTasksAC} from "./tasks-reduser";
 
 export type TodoListComponentType = {
     id: string
@@ -83,17 +83,17 @@ export const TodoList = React.memo((props: TodoListComponentType) => {
             <div>
                 <Button
                     variant={props.filter === "ALL" ? "contained" : "text"}
-                    onClick={onFilterChangeTodoListClick}>All
+                    onClick={onFilterChangeTodoListClick}>ALL
                 </Button>
                 <Button
                     color={"primary"}
                     variant={props.filter === "ACTIVE" ? "contained" : "text"}
-                    onClick={onFilterChangeTodoListClick}>Active
+                    onClick={onFilterChangeTodoListClick}>ACTIVE
                 </Button>
                 <Button
                     color={"secondary"}
                     variant={props.filter === "COMPLETED" ? "contained" : "text"}
-                    onClick={onFilterChangeTodoListClick}>Completed
+                    onClick={onFilterChangeTodoListClick}>COMPLETED
                 </Button>
             </div>
         </div>

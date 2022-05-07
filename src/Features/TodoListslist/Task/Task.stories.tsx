@@ -1,9 +1,9 @@
 import React from "react";
 import {action} from "@storybook/addon-actions";
-import {Task, TaskPropsType} from "../../Components/Task";
+import {Task, TaskPropsType} from "./Task";
 import {ComponentMeta, ComponentStory} from "@storybook/react";
-import {TaskPriorities, TaskStatus} from "../../API/todolists-api";
-import {todoListID1} from "../../state/todolist-reduser";
+import {TaskPriorities, TaskStatus} from "../../../API/todolists-api";
+import {todoListID1} from "../todolist-reduser";
 
 export default {
     title: "Task component",
