@@ -30,6 +30,7 @@ TaskBaseExample.args = {
         todoListId: todoListID1,
         order: 0,
         addedDate: '',
+        entityStatus: "idle"
     },
     todoListId: 'todoList_1',
     removeTask: action("remove"),
@@ -51,6 +52,7 @@ TaskBaseExample_2.args = {
         todoListId: todoListID1,
         order: 0,
         addedDate: '',
+        entityStatus: "idle"
     },
     todoListId: 'todoList_1',
     removeTask: action("remove"),

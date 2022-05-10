@@ -7,12 +7,14 @@ import {Task} from "./Task/Task";
 import {FilterType} from "./todolist-reduser";
 import {TaskStatus, TaskType} from "../../API/todolists-api";
 import {useDispatch} from "react-redux";
-import {setTasks, setTasksAC} from "./tasks-reduser";
+import {setTasks} from "./tasks-reduser";
+import {RequestStatusType} from "../../App/App-reducer";
 
 export type TodoListComponentType = {
     id: string
     title: string
     filter: string
+    entityStatus: RequestStatusType
     tasks: Array<TaskType>
     changeFilterTodoList: (filter: FilterType, id: string) => void
     addTask: (objID: string, inputValue: string) => void
@@ -24,12 +26,12 @@ export type TodoListComponentType = {
 }
 
 export const TodoList = React.memo((props: TodoListComponentType) => {
-    console.log("Todolist Todolist Todolist")
     let dispatch = useDispatch<any>()
 
     useEffect(() => {
         dispatch(setTasks(props.id))
     }, [])
+
     const onFilterChangeTodoListClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         let filter = e.currentTarget.innerText
         props.changeFilterTodoList(filter, props.id)
@@ -49,7 +51,7 @@ export const TodoList = React.memo((props: TodoListComponentType) => {
     } else if (props.filter === "COMPLETED") {
         tasksFoTodolist = props.tasks.filter(t => t.status !== TaskStatus.Completed)
     }
-
+    console.log('todolist :' + props.entityStatus)
     return (
         <div>
             {/*---------------------TITLE TASK--------------------*/}
@@ -58,12 +60,12 @@ export const TodoList = React.memo((props: TodoListComponentType) => {
                     title={props.title}
                     callback={(value) => props.changeTodoListTitle(value, props.id)}
                 />
-                <IconButton onClick={removeTodolist} color="primary">
+                <IconButton onClick={removeTodolist} color="primary" disabled={props.entityStatus === 'loading'}>
                     <Delete/>
                 </IconButton>
             </h3>
             {/*---------------------- INPUT FIELD TASK-------------------- */}
-            <AddItemForm callback={addTask}/>
+            <AddItemForm callback={addTask} disabled={props.entityStatus === 'loading'}/>
             {/*--------------------------- MAP TASKS ------------------------*/}
             <div>
                 {
@@ -75,6 +77,7 @@ export const TodoList = React.memo((props: TodoListComponentType) => {
                             changeTaskTitle={props.changeTaskTitle}
                             task={task}
                             todoListId={props.id}
+                            entityStatus={task.entityStatus}
                         />
                     )
                 }

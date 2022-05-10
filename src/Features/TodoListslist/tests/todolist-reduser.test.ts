@@ -1,6 +1,6 @@
 import {v1} from 'uuid';
 import {
-    addTodolistAC, removeTodolistAC, setTodolistAC,
+    addTodolistAC, removeTodolistAC, setTodolistsAC,
     TodoListDomainType,
     TodoListsActionTypes,
     todoListsReducer,
@@ -16,8 +16,8 @@ beforeEach(() => {
     todolistId2  = v1();
 
     startState = [
-        {id: todolistId1, title: "What to learn", filter: "all", addedDate: "",order: 0},
-        {id: todolistId2, title: "What to buy", filter: "all", addedDate: "",order: 0}
+        {id: todolistId1, title: "What to learn", filter: "ALL", addedDate: "",order: 0, entityStatus: "idle"},
+        {id: todolistId2, title: "What to buy", filter: "ALL", addedDate: "",order: 0, entityStatus: "idle"}
     ]
 })
 
@@ -56,7 +56,7 @@ test("Change todolist title", () => {
 
 test("Set todolist to state", () => {
 
-    let action = setTodolistAC(startState)
+    let action = setTodolistsAC(startState)
 let endState = todoListsReducer(startState, action)
 
     expect(endState.length).toBe(2)

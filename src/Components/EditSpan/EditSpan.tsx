@@ -1,31 +1,36 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {TextField} from "@mui/material";
+import {RequestStatusType} from "../../App/App-reducer";
 
 export type EditSpanPropsType = {
     title: string
-    callback?: (title:string) => void
+    disable?: boolean
+    callback?: (title: string) => void
+    entityStatus?: RequestStatusType
 }
 
 export const EditSpan = React.memo((props: EditSpanPropsType) => {
-    console.log("editSpan")
     const [show, setShow] = useState(true)
     const [title, setTitle] = useState(props.title)
 
-    const changeValue = (e: ChangeEvent<HTMLInputElement>) => {setTitle(e.currentTarget.value)}
+    const changeValue = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
+    }
 
     const setTitleHandler = () => {
         props.callback && props.callback(title)
         setShow(true)
     }
 
-    const onInputKeyPressChange =(e: KeyboardEvent) => {
+    const onInputKeyPressChange = (e: KeyboardEvent) => {
         if (e.charCode === 13) setTitleHandler()
     }
-
     return (
         <>
             {show
-                ? <span onDoubleClick={() => setShow(false)}>{props.title}</span>
+                ? <span
+                    style={props.entityStatus === 'loading' ? {pointerEvents: "none"} : {}}
+                    onDoubleClick={() => setShow(false)} >{props.title}</span>
                 : <TextField
                     variant={"standard"}
                     onChange={changeValue}

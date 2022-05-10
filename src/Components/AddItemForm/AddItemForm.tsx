@@ -4,10 +4,11 @@ import AddIcon from '@mui/icons-material/Add';
 
 export type AddItemFormPropsType = {
     callback: (title: string) => void
+    disabled?: boolean
 }
 
 export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
-    console.log("AddItemForm is called")
+    // console.log("AddItemForm is called")
     const [error, setError] = useState<string | null>(null)
     const [inputValue, setInputValue] = useState<string>("")
     const [btnAddTaskStatus, setBtnAddTaskStatus] = useState(false)
@@ -18,7 +19,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
         setInputValue(e.currentTarget.value)
     }
 
-    const onInputKeyPressChange =(e: KeyboardEvent) => {
+    const onInputKeyPressChange = (e: KeyboardEvent) => {
         setError(null)
         if (e.charCode === 13) onAddItem()
     }
@@ -34,7 +35,8 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
 
     return (
         <div>
-                <TextField
+            <TextField
+                disabled={props.disabled}
                 error={!!error}
                 helperText={error}
                 color={"primary"}
@@ -43,13 +45,13 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
                 onChange={onInputChange}
                 onKeyPress={onInputKeyPressChange}
             />
-                <IconButton
-                    onClick={onAddItem}
-                    disabled={btnAddTaskStatus}
-                    color={'primary'}
-                >
-                    <AddIcon/>
-                </IconButton>
+            <IconButton
+                onClick={onAddItem}
+                disabled={btnAddTaskStatus || props.disabled}
+                color={'primary'}
+            >
+                <AddIcon/>
+            </IconButton>
         </div>
     )
 })
