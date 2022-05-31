@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import {RequestStatusType} from "../App/App-reducer";
 
 // ----- AXIOS
@@ -41,13 +41,40 @@ export const todoListApi = {
     }
 }
 
+
+export const authAPI = {
+    login(data: LoginParamsType) {
+        return axiosInstance.post<LoginParamsType, AxiosResponse<ResponseType<{userId: number}>>>('/auth/login', data)
+    },
+    me() {
+        return axiosInstance.get<ResponseType<{data: AuthMeTypes}>>('/auth/me')
+    },
+    logout() {
+        return axiosInstance.delete<ResponseType>('/auth/login')
+    }
+}
+
 // ----- TYPES
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe?: boolean
+    captcha?: string
+}
+
+export type AuthMeTypes = {
+    id: number
+    email: string
+    login: string
+}
+
 export enum TaskStatus {
     New = 0,
     InProgress = 1,
     Completed = 2,
     Draft = 3
 }
+
 export enum TaskPriorities {
     low,
     Middle,
@@ -55,6 +82,7 @@ export enum TaskPriorities {
     Urgently,
     Later,
 }
+
 export type TodoListType = {
     id: string,
     title: string,

@@ -9,21 +9,33 @@ import {
     setTodoLists,
     TodoListDomainType
 } from "./todolist-reduser";
-import {addTaskTC, updateTaskTC, removeTaskTC, TasksStateType} from "./tasks-reduser";
+import {addTaskTC, updateTaskTC, removeTaskTC, TasksStateType} from "./Task/tasks-reduser";
 import React, {useCallback, useEffect} from "react";
 import {TaskStatus} from "../../API/todolists-api";
 import {Grid, Paper} from "@mui/material";
 import {AddItemForm} from "../../Components/AddItemForm/AddItemForm";
 import {TodoList} from "./TodoList";
+import {useNavigate} from "react-router-dom";
 
-export const TodoListsList = () => {
+type PropsType = {
+    demo?: boolean
+}
+
+export const TodoListsList: React.FC<PropsType> = ({demo= false}) => {
     const todoListState = useSelector<AppRootStateType, TodoListDomainType[]>(state => state.todoLists)
     const tasksState = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch<any>()
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const navigate = useNavigate()
 
     useEffect(() => {
-        dispatch(setTodoLists())
-    }, [])
+        if (isLoggedIn) {
+            dispatch(setTodoLists())
+        } else {
+            navigate('/login')
+        }
+
+    }, [isLoggedIn])
 
     //----------------------- CALLBACK ---------------------------
     const addTask = useCallback((idTdl: string, inputValue: string) => {
@@ -59,6 +71,12 @@ export const TodoListsList = () => {
         (title: string, taskId: string, todolistId: string) => {
             dispatch(updateTaskTC(taskId, {title}, todolistId))
         }, [dispatch])
+
+    // if (!isLoggedIn) {
+    //     return <Navigate to={'/login'}/>
+    // }
+
+
     return <>
         <Grid container style={{padding: "10px"}}>
             <AddItemForm callback={addTodoList}/>
@@ -72,10 +90,11 @@ export const TodoListsList = () => {
                         <Grid item key={todoList.id}>
                             <Paper elevation={3} style={{padding: "10px"}}>
                                 <TodoList
-                                    id={todoList.id}
-                                    title={todoList.title}
-                                    entityStatus={todoList.entityStatus}
-                                    filter={todoList.filter}
+                                    // id={todoList.id}
+                                    // title={todoList.title}
+                                    // entityStatus={todoList.entityStatus}
+                                    // filter={todoList.filter}
+                                    todoList={todoList}
                                     tasks={tasks}
                                     removeTask={removeTask}
                                     changeFilterTodoList={changeFilterTodoList}
@@ -84,6 +103,7 @@ export const TodoListsList = () => {
                                     removeTodolist={removeTodolist}
                                     changeTodoListTitle={changeTodoListTitle}
                                     changeTaskTitle={changeTaskTitle}
+                                    demo={demo}
                                 />
                             </Paper>
                         </Grid>

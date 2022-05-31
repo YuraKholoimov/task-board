@@ -3,7 +3,7 @@ import tasksReducer, {
     changeTaskTitleAC,
     removeTaskAC,
     setTasksAC
-} from "../tasks-reduser";
+} from "../Task/tasks-reduser";
 import {addTodolistAC, InitialStateTodolist, removeTodolistAC, setTodolistsAC, todoListID1} from "../todolist-reduser";
 import {TaskPriorities, TaskStatus, TaskType} from "../../../API/todolists-api";
 import {v1} from "uuid";

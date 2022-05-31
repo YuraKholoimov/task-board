@@ -22,13 +22,18 @@ const tasks = store.getState().tasks[todoListID1]
 
 export const TodoListBaseExample = Template.bind({});
 TodoListBaseExample.args = {
-    title: 'todolist',
-    id: "1",
+    todoList: {
+        title: 'todolist',
+        id: "1",
+        filter: "filter",
+        order: 0,
+        entityStatus: "idle",
+        addedDate: ''
+    },
     changeTaskTitle: action("change"),
     tasks: tasks,
     addTask: action('add tack'),
     onChangeTaskStatus: action('change'),
-    filter: "filter",
     removeTask: action('remove'),
     changeFilterTodoList: action('change'),
     changeTodoListTitle: action('change'),
