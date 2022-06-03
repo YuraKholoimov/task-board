@@ -11,7 +11,6 @@ import {Login} from "../Features/Login/Login";
 import { useDispatch } from 'react-redux';
 import {initializeAppTC} from "./App-reducer";
 
-
 function App() {
     const error = useSelector<AppRootStateType, string | null>(state => state.app.error)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
@@ -44,7 +43,5 @@ function App() {
         </div>
     );
 }
-
-
 
 export default App;

@@ -25,7 +25,7 @@ export function ErrorSnackBar(props: ErrorSnackBarPropsType) {
         }
 
         setOpen(false);
-        dispatch(setAppErrorAC(null))
+        dispatch(setAppErrorAC({error: null}))
     };
 
 
