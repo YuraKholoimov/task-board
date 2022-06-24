@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.713edc3f.css","mappings":"AAAA,KACI,6EAAwC,CACxC,yBACJ","sources":["index.css"],"sourcesContent":["body {\n    background:  url(Assets/pexels-grey.jpg);\n    background-size: 150% auto;\n}"],"names":[],"sourceRoot":""}
