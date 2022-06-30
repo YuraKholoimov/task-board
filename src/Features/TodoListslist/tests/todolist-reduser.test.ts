@@ -1,6 +1,6 @@
 import {v1} from 'uuid';
 import {
-    addTodolistAC, removeTodolistAC, setTodolistsAC,
+    addTodolistAC, changeTodolistEntityStatusAC, removeTodolistAC, setTodolistsAC,
     TodoListDomainType, todoListID1,
     TodoListsActionTypes,
     todoListsReducer,
@@ -30,29 +30,23 @@ test('correct todolist should be removed', () => {
     expect(endState[0].id).toBe(todolistId2);
 });
 
-// test('correct todolist should be added', () => {
-//
-//     let newTodolistTitle: string = "New Todolist";
-//
-//     const endState = todoListsReducer(startState, addTodolistAC("New Todolist"))
-//
-//     expect(endState.length).toBe(3);
-//     expect(endState[2].title).toBe(newTodolistTitle);
-// });
+test('correct todolist should be added', () => {
 
-test("Change todolist title", () => {
+    let newTodolistTitle: string = "What to learn";
 
-    // const newTitle = "NewTitle"
-    //
-    // const action: TodoListsActionTypes = {
-    //     type: 'CHANGE-TODOLIST-TITLE',
-    //     id: todolistId1,
-    //     title: newTitle,
-    //
-    // }
-    // let changedState = todoListsReducer(startState, action)
-    //
-    // expect(changedState[0].title).toBe("NewTitle")
+    const endState = todoListsReducer(startState, addTodolistAC({todoList:  {id: todolistId1, title: "What to learn", addedDate: "",order: 0}}))
+
+    expect(endState.length).toBe(3);
+    expect(endState[0].title).toBe(newTodolistTitle);
+});
+
+test("Correct status of todolist should be changed", () => {
+
+    const action = changeTodolistEntityStatusAC({id: todolistId1, entityStatus: "idle"})
+
+    let changedState = todoListsReducer(startState, action)
+
+    expect(changedState[0].entityStatus).toBe("idle")
 })
 
 test("Set todolist to state", () => {
