@@ -1,11 +1,9 @@
 import tasksReducer, {
-    addTaskAC,
-    changeTaskTitleAC,
-    removeTaskAC,
-    setTasksAC,
+    addTaskAC, removeTaskTC,
+    setTasks,
     updateTaskAC
 } from "../Task/tasks-reduser";
-import {addTodolistAC, InitialStateTodolist, removeTodolistAC, setTodolistsAC, todoListID1} from "../todolist-reduser";
+import {addTodolistAC, removeTodolistAC, setTodolistsAC, todoListID1} from "../todolist-reduser";
 import {TaskPriorities, TaskStatus, TaskType} from "../../../API/todolists-api";
 import {v1} from "uuid";
 
@@ -72,7 +70,7 @@ beforeEach(() => {
 
 test('correct task should be deleted from correct array', () => {
 
-    const action = removeTaskAC({idTask: "1", todolistId: todolistId1});
+    const action = removeTaskTC.fulfilled({idTask: "1", todolistId: todolistId1},'', {taskId: "1", todoListId: todolistId1});
     const endState = tasksReducer(startState, action)
 
     expect(endState).toEqual({
@@ -188,10 +186,12 @@ test('property with todo-listId should be deleted', () => {
 
 test("Add empty array when todo-lists set to state", () => {
 
-    let action = setTodolistsAC({todoLists: [
-        {id:todolistId1, order: 0, addedDate: "", title: "title1"},
-        {id:todolistId2, order: 0, addedDate: "", title: "title2"},
-        ]})
+    let action = setTodolistsAC({
+        todoLists: [
+            {id: todolistId1, order: 0, addedDate: "", title: "title1"},
+            {id: todolistId2, order: 0, addedDate: "", title: "title2"},
+        ]
+    })
     let endState = tasksReducer({}, action)
 
     let key = Object.keys(endState)
@@ -201,7 +201,7 @@ test("Add empty array when todo-lists set to state", () => {
 
 test("Task should be added for todolist", () => {
 
-    let action = setTasksAC({tasks: startState[todolistId1], todolistId: todolistId1})
+    let action = setTasks.fulfilled({tasks: startState[todolistId1], todolistId: todolistId1}, '', todolistId1)
     let endState = tasksReducer({
         todolistId1: [],
         todolistId2: []
